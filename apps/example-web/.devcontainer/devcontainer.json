@@ -1,0 +1,10 @@
+{
+  "name": "example-web",
+  "dockerComposeFile": [
+    "../../../docker-compose.yaml"
+  ],
+  "service": "web",
+  "shutdownAction": "none",
+  // Open the sub-folder with the source code
+  "workspaceFolder": "/workspace/apps/example-web"
+}

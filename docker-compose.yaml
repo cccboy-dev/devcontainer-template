@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  web:
+    restart: always
+    container_name: example
+    build: ./apps/example-web
+    labels:
+      - "traefik.http.routers.example_web.rule=Host(`example.cccboy.com`) && PathPrefix(`/`)"
+      - "traefik.http.routers.example_web.service=svc_example_web"
+      - "traefik.http.services.svc_example_web.loadbalancer.server.port=80"
+    networks:
+      - traefik_default
+
+  server:
+    restart: always
+    container_name: example-server
+    build: ./apps/example-server
+    labels:
+      - "traefik.http.routers.example_server.rule=Host(`example.cccboy.com`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.example_server.service=svc_example_server"
+      - "traefik.http.services.svc_example_server.loadbalancer.server.port=3000"
+    networks:
+      - traefik_default
+
+networks:
+  traefik_default:
+    external: true
